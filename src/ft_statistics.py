@@ -4,7 +4,7 @@ def ft_median(lst: list):
     """Calculate the median of a given list."""
     lst.sort()
     mid = len(lst) // 2
-    if (len(lst) % 2 == 0):
+    if len(lst) % 2 == 0:
         return (lst[mid - 1] + lst[mid]) / 2
     else:
         return lst[mid]
