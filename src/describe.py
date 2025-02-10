@@ -6,7 +6,7 @@ from ft_statistics import ft_mean, ft_min_max, ft_median, ft_quartile, ft_ecart_
 
 class Feature:
     def __init__(self, lst: list, name:str):
-        """Init the feature class to stock the statistics
+        """Init the feature class to stock the statistics\n
         -name -count -mean -quartile 1 & 3 -std -min -max median"""
         self.name          = name
         self.count         = len(lst)

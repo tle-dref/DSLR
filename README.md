@@ -8,3 +8,6 @@ fonction qui prends un tableau et qui affiche count, std, var, ecart type, mean,
 
 
 tupple avec nom des features ? + list de dictionnaire qui stock chaque statistique de chaque features ?
+
+
+divination  History of M
