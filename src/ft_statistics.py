@@ -15,6 +15,7 @@ def ft_mean(lst: list):
 
 def ft_quartile(lst: list):
     """Calculate the first and third quartiles of a given list. (25% and 75%)"""
+    lst = sorted(lst)
     mid = len(lst) // 2
     if (len(lst) % 2 == 0):
         lower = lst[:mid]
