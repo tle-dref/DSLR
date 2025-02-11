@@ -2,6 +2,8 @@ import sys as sys
 from histogram import load
 import pandas as pd
 import matplotlib.pyplot as plt
+from logisticRegression import LogisticRegression
+import numpy as np
 
 def binary_house_name(db: pd.DataFrame, house: str) -> pd.DataFrame:
     """"""
@@ -17,12 +19,34 @@ def binary_house_name(db: pd.DataFrame, house: str) -> pd.DataFrame:
 
 def main():
     try:
-        assert len(sys.argv) == 2, "Bad arguments need one"
+        assert len(sys.argv) == 3, "Bad arguments need one"
         db_name = sys.argv[1]
-        house = "Slytherin"
-        db = load(db_name)
-        db = binary_house_name(db, house)
-        print(db)
+        db_test = sys.argv[2]
+        houses = ["Slytherin", "Ravenclaw", "Gryffindor", "Hufflepuff"]
+        result = np.ndarray(shape=(400, 1))
+        result.fill(0)
+
+        for house in houses:
+            db = load(db_name)
+            dbTest = pd.read_csv(db_test)
+            Xtest = dbTest.drop(columns=["Hogwarts House"])
+            Xtest = Xtest.select_dtypes(include=['float64'])
+            Xtest = Xtest.fillna(0)
+            db = binary_house_name(db, house)
+            y = db["Hogwarts House"]
+            X = db.select_dtypes(include=['float64'])
+            # print(X.shape)
+            # print(dbTest)
+            model = LogisticRegression()
+            model.fit(X, y)
+            y_test = model.predict(Xtest)
+            # print(f"result : {y_test}")
+            for i in range(len(y_test)):
+                if y_test[i] == 1:
+                    result[i] += 1
+        print(f"result : {result}")
+        # print(np.sum(y_test == y) / len(y))
+
     except AssertionError as e:
         print(f"AssertionError :{e}")
 

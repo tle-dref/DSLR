@@ -23,7 +23,7 @@ def load(path: str) -> pd.DataFrame:
     if not isinstance(path, str):
         raise TypeError("Bad argument type -> need path: str")
     dt = pd.read_csv(path)
-    dt.dropna(inplace=True)
+    # dt.dropna(inplace=True)
     return dt
 
 
