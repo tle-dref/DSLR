@@ -2,11 +2,12 @@ from matplotlib.colors import Normalize
 import numpy as np
 
 class LogisticRegression():
-    def __init__(self, l_rate = 0.1, nb_iters = 1000):
+    def __init__(self, l_rate = 0.01, nb_iters = 1000000):
         self.l_rate = l_rate
         self.nb_iters = nb_iters
         self.weights = None
         self.bias = None
+        self.tol = 1e-2
 
     def normalize(self, X):
         return X / X.max(axis=0)
@@ -29,6 +30,9 @@ class LogisticRegression():
             dw = (1 / nb_samples) * np.dot(X.T, (prediction - y))
             db = (1 / nb_samples) * np.sum(prediction - y)
 
+            if np.linalg.norm(dw) < self.tol and abs(db) < self.tol:
+                print(f"Convergence atteinte à l'itération {_}")
+                break
             # update weights and bias
             self.weights -= self.l_rate * dw
             self.bias -= self.l_rate * db

@@ -23,8 +23,7 @@ def main():
         db_name = sys.argv[1]
         db_test = sys.argv[2]
         houses = ["Slytherin", "Ravenclaw", "Gryffindor", "Hufflepuff"]
-        result = np.ndarray(shape=(400, 1))
-        result.fill(0)
+        result = np.array(["moldu"] * 400)
 
         for house in houses:
             db = load(db_name)
@@ -43,7 +42,9 @@ def main():
             # print(f"result : {y_test}")
             for i in range(len(y_test)):
                 if y_test[i] == 1:
-                    result[i] += 1
+                    result[i] = house
+                # if i == 375:
+                    # print(y_test[i])
         print(f"result : {result}")
         # print(np.sum(y_test == y) / len(y))
 
