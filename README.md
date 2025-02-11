@@ -1,13 +1,20 @@
 # DSLR
+trouver comment recuperer le weight et le bias de chaques modeles qui correspondent aux 4 maisons
+utiliser dans logreg_predit.py chaque pair qui correspondent aux maisons
 
+format du fichier de sauvegarde(meileur extension a trouver):
+Gryffindor:
+    - weight: [...]
+    - bias: [...]
 
-tab['feature'] -> feature sous forme de tableau !!
+Slytherin:
+    - weight: [...]
+    - bias: [...]
 
+Ravenclaw:
+    - weight: [...]
+    - bias: [...]
 
-fonction qui prends un tableau et qui affiche count, std, var, ecart type, mean, median, quartile
-
-
-tupple avec nom des features ? + list de dictionnaire qui stock chaque statistique de chaque features ?
-
-
-divination  History of M
+Hufflepuff:
+    - weight: [...]
+    - bias: [...]
