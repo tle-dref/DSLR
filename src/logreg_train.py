@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from logisticRegression import LogisticRegression
 import numpy as np
+import os
 
 def binary_house_name(db: pd.DataFrame, house: str) -> pd.DataFrame:
     """change all house name to 1 if it's the house in parameters else 0"""
@@ -36,35 +37,21 @@ def find_best_lr(db: pd.DataFrame):
 
 def main():
     try:
-        assert len(sys.argv) == 3, "Bad arguments need one"
+        assert len(sys.argv) == 2, "Bad arguments need one"
         db_name = sys.argv[1]
-        db_test = sys.argv[2]
         houses = ["Slytherin", "Ravenclaw", "Gryffindor", "Hufflepuff"]
-        result = np.array(["moldu"] * 400)
+        if os.path.exists("weights_bias.csv"):
+            os.remove("weights_bias.csv")
         db = load(db_name)
         lr = find_best_lr(db);
         for house in houses:
             db = load(db_name)
-            dbTest = pd.read_csv(db_test)
-            Xtest = dbTest.drop(columns=["Hogwarts House"])
-            Xtest = Xtest.select_dtypes(include=['float64'])
-            Xtest = Xtest.fillna(0)
             db = binary_house_name(db, house)
             y = db["Hogwarts House"]
             X = db.select_dtypes(include=['float64'])
-            # print(X.shape)
-            # print(dbTest)
             model = LogisticRegression(l_rate=lr)
             model.fit(X, y)
-            y_test = model.predict(Xtest)
-            # print(f"result : {y_test}")
-            for i in range(len(y_test)):
-                if y_test[i] == 1:
-                    result[i] = house
-                # if i == 375:
-                    # print(y_test[i])
-        print(f"result : {result}")
-        # print(np.sum(y_test == y) / len(y))
+            model.save_w_b(house)
 
     except AssertionError as e:
         print(f"AssertionError :{e}")
