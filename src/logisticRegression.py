@@ -14,16 +14,12 @@ class LogisticRegression():
 
     def save_w_b(self, house: str, filename="weights_bias.csv"):
         """Sauvegarde les poids et le biais sous forme de base de données CSV."""
-
         # Convertir les poids en une chaîne pour stockage
         weights_str = ",".join(map(str, self.weights))
-
         # Créer un dictionnaire avec les nouvelles valeurs
         new_data = {"House": [house], "Weights": [weights_str], "Bias": [self.bias]}
-
         # Convertir en DataFrame Pandas
         df_new = pd.DataFrame(new_data)
-
         # Vérifier si le fichier existe déjà
         if os.path.exists(filename):
             # Charger l'ancien fichier et ajouter les nouvelles valeurs
@@ -31,7 +27,6 @@ class LogisticRegression():
             df_final = pd.concat([df_old, df_new], ignore_index=True)
         else:
             df_final = df_new  # Si le fichier n'existe pas, créer un nouveau DataFrame
-
         # Sauvegarder dans le fichier CSV
         df_final.to_csv(filename, index=False, encoding="utf-8")
 

@@ -1,6 +1,7 @@
 import pandas as pd
 import sys as sys
 import numpy as np
+from pandas.core.interchange.dataframe_protocol import Column
 
 def normalize(X):
     return X / X.max(axis=0)
@@ -37,14 +38,15 @@ def main():
         Xtest = Xtest.select_dtypes(include=['float64'])
         Xtest = Xtest.fillna(0)
         w_b = pd.read_csv(sys.argv[2])
-        result = np.array(["moldu"] * 400)
+        result = np.full(400, "moldu", dtype=object)
         for house in houses:
             weights, bias = get_w_b_by_house(w_b, house)
             y_test = predict(Xtest, weights, bias)
             for i in range(len(y_test)):
                 if y_test[i] == 1:
                     result[i] = house
-        print(f"result : {result}")
+        result = pd.DataFrame(result, columns=["Hogwarts House"])
+        result.to_csv("Houses.csv", index=True, index_label="Index")
 
     except AssertionError as a:
         print(f"AssertionError: {a}")
