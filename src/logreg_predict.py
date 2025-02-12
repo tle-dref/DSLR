@@ -2,20 +2,8 @@ import pandas as pd
 import sys as sys
 import numpy as np
 from pandas.core.interchange.dataframe_protocol import Column
+from logisticRegression import LogisticRegression
 
-def normalize(X):
-    return X / X.max(axis=0)
-
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-def predict(Xtest :pd.DataFrame, weights, bias):
-    """"""
-    Xtest = normalize(Xtest)
-    linear_pred = np.dot(Xtest, weights) + bias
-    y_pred = sigmoid(linear_pred)
-    class_pred = [0 if y < 0.5 else 1 for y in y_pred]
-    return class_pred
 
 def get_w_b_by_house(w_b, house):
     """"""
@@ -39,9 +27,10 @@ def main():
         Xtest = Xtest.fillna(0)
         w_b = pd.read_csv(sys.argv[2])
         result = np.full(400, "moldu", dtype=object)
+        model = LogisticRegression()
         for house in houses:
             weights, bias = get_w_b_by_house(w_b, house)
-            y_test = predict(Xtest, weights, bias)
+            y_test = model.predict(Xtest, weights, bias)
             for i in range(len(y_test)):
                 if y_test[i] == 1:
                     result[i] = house

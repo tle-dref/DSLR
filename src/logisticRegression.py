@@ -14,22 +14,17 @@ class LogisticRegression():
 
     def save_w_b(self, house: str, filename="weights_bias.csv"):
         """Sauvegarde les poids et le biais sous forme de base de données CSV."""
-        # Convertir les poids en une chaîne pour stockage
+        # convert weights to string
         weights_str = ",".join(map(str, self.weights))
-        # Créer un dictionnaire avec les nouvelles valeurs
+        # create a dictionary with the new data
         new_data = {"House": [house], "Weights": [weights_str], "Bias": [self.bias]}
-        # Convertir en DataFrame Pandas
         df_new = pd.DataFrame(new_data)
-        # Vérifier si le fichier existe déjà
         if os.path.exists(filename):
-            # Charger l'ancien fichier et ajouter les nouvelles valeurs
             df_old = pd.read_csv(filename)
             df_final = pd.concat([df_old, df_new], ignore_index=True)
         else:
-            df_final = df_new  # Si le fichier n'existe pas, créer un nouveau DataFrame
-        # Sauvegarder dans le fichier CSV
+            df_final = df_new  # create the file if it doesn't exist
         df_final.to_csv(filename, index=False, encoding="utf-8")
-
         print(f"✅ Données sauvegardées pour {house} dans {filename}")
 
 
@@ -56,7 +51,7 @@ class LogisticRegression():
             db = (1 / nb_samples) * np.sum(prediction - y)
             # stop loss
             if np.linalg.norm(dw) < self.tol and abs(db) < self.tol:
-                # print(f"Convergence atteinte à l'itération {_}")
+                # print(f"Converg point reached at iter : {_}")
                 break
             # update weights and bias
             self.weights -= self.l_rate * dw
@@ -64,6 +59,11 @@ class LogisticRegression():
 
     def predict(self, X, weights=None, bias=None):
         X = self.normalize(X)
+        if self.weights is None and weights is None:
+            raise ValueError("You should fit the model before predict, or provide weights and bias")
+        if weights is not None:
+            self.weights = weights
+            self.bias = bias
         linear_pred = np.dot(X, self.weights) + self.bias
         y_pred = self.sigmoid(linear_pred)
         class_pred = [0 if y < 0.5 else 1 for y in y_pred]

@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import statistics as st
 from ft_statistics import ft_mean, ft_min_max, ft_median, ft_quartile, ft_ecart_type
+from histogram import load
 
 class Feature:
     def __init__(self, lst: list, name:str):
@@ -16,15 +17,6 @@ class Feature:
         self.min, self.max = ft_min_max(lst)
         self.median        = ft_median(lst)
 
-def load(path: str) -> pd.DataFrame:
-    """Load a DataBase with a path (str) and return it
-       Raise:
-           TypeError()"""
-    if not isinstance(path, str):
-        raise TypeError("Bad argument type -> need path: str")
-    dt = pd.read_csv(path)
-    # dt.dropna(inplace=True)
-    return dt
 
 
 def describe(db: pd.DataFrame):
