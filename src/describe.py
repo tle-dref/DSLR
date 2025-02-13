@@ -18,7 +18,6 @@ class Feature:
         self.median        = ft_median(lst)
 
 
-
 def describe(db: pd.DataFrame):
     """Display all feature in the Database in :.6f format"""
     tmp = list(db.select_dtypes(include=['float64']).columns)
@@ -43,6 +42,7 @@ def describe(db: pd.DataFrame):
     df_describe = pd.DataFrame(data, index=["Count", "Mean", "Std", "Min", "25%", "50%", "75%", "Max"])
     print(df_describe.to_string(float_format="%.6f"))
 
+
 def main():
     try:
         assert len(sys.argv) == 2, "Bad arguments need one"
@@ -51,6 +51,7 @@ def main():
         describe(db)
     except AssertionError as e:
         print(f"AssertionError :{e}")
+
 
 if __name__ == "__main__":
     main()

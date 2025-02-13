@@ -16,6 +16,7 @@ def load(path: str) -> pd.DataFrame:
     dt.dropna(inplace=True)
     return dt
 
+
 def histogram(db: pd.DataFrame):
     """Load an historigram of the most homogeneous feature"""
     tmp = list(db.select_dtypes(include=['float64']).columns)
@@ -29,6 +30,7 @@ def histogram(db: pd.DataFrame):
     plt.title(homogeneous)
     plt.show()
 
+
 def main():
     try:
         assert len(sys.argv) == 2, "Bad arguments need one"
@@ -38,6 +40,7 @@ def main():
 
     except AssertionError as e:
         print(f"AssertionError :{e}")
+
 
 if __name__ == "__main__":
     main()

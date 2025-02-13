@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from describe import load, Feature
 
+
 def find_similar(features: list):
     """find the lowest minimum between the mean of all features"""
     f1, f2 = "", ""
@@ -22,7 +23,7 @@ def find_similar(features: list):
 
 
 def scatter_plot(db: pd.DataFrame):
-    """"""
+    """Creates a scatter plot of the two most similar features from a DataFrame."""
     tmp = list(db.select_dtypes(include=['float64']).columns)
     features = []
     for i in range(len(tmp)):
@@ -37,16 +38,15 @@ def scatter_plot(db: pd.DataFrame):
     plt.title(f"{f1.name} / {f2.name}")
     plt.show()
 
+
 def main():
-    """"""
     try:
         assert len(sys.argv) == 2, f"Bad Argument need one -> python3 {sys.argv[0]} 'pathToDb'"
         db = load(sys.argv[1])
         scatter_plot(db)
-    # except TypeError as t:
-    #     print(f"TypeError: {t}")
     except AssertionError as a:
         print(f"AssertionError: {a}")
+
 
 if __name__ == "__main__":
     main()

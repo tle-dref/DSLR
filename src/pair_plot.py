@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 def pair_plot(db: pd.DataFrame):
     """Display a pair plot of the most homogeneous feature"""
     tmp = list(db.select_dtypes(include=['float64']).columns)
@@ -12,6 +13,7 @@ def pair_plot(db: pd.DataFrame):
     sns.pairplot(db, hue="Hogwarts House", diag_kind="hist", corner=True)
     plt.show()
 
+
 def main():
     try:
         db = load("datasets/dataset_train.csv")
@@ -19,6 +21,7 @@ def main():
 
     except Exception as e:
         print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     main()

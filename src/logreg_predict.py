@@ -6,15 +6,15 @@ from logisticRegression import LogisticRegression
 
 
 def get_w_b_by_house(w_b, house):
-    """"""
+    """Extracts weights and bias from a DataFrame for a specific house."""
     line = w_b.loc[w_b["House"] == house]
     weights_str = line["Weights"].values[0]
     weights = np.array(list(map(float, weights_str.split(","))))
     bias = line["Bias"].values[0]
     return weights, bias
 
+
 def main():
-    """"""
     try:
         assert len(sys.argv) == 3, "Bad arguments need one"
         assert sys.argv[1] == "datasets/dataset_test.csv", "datasets/dataset_test.csv is required"

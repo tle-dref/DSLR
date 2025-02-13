@@ -6,6 +6,7 @@ from logisticRegression import LogisticRegression
 import numpy as np
 import os
 
+
 def binary_house_name(db: pd.DataFrame, house: str) -> pd.DataFrame:
     """change all house name to 1 if it's the house in parameters else 0"""
     if not isinstance(house, str):
@@ -16,6 +17,7 @@ def binary_house_name(db: pd.DataFrame, house: str) -> pd.DataFrame:
         raise ValueError("House not in the database")
     db["Hogwarts House"] = db["Hogwarts House"].apply(lambda x: 1 if x == house else 0)
     return db
+
 
 def find_best_lr(db: pd.DataFrame):
     """Find the best learning rate for the logistic regression"""
@@ -35,6 +37,7 @@ def find_best_lr(db: pd.DataFrame):
     print(f"final best score : {best_score} with lr : {best_lr}")
     return best_lr
 
+
 def main():
     try:
         assert len(sys.argv) == 2, "Bad arguments need one"
@@ -52,9 +55,9 @@ def main():
             model = LogisticRegression(l_rate=lr)
             model.fit(X, y)
             model.save_w_b(house)
-
     except AssertionError as e:
         print(f"AssertionError :{e}")
+
 
 if __name__ == "__main__":
     main()
